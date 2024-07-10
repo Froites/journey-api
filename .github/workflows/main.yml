@@ -27,12 +27,12 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: |
-            froites/journey-api:${{ steps.generate_sha.outputs.sha }}
-            froites/journey-api:latest
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: |
+          froites/journey-api:${{ steps.generate_sha.outputs.sha }}
+          froites/journey-api:latest
 
     # Enviar imagem pós
