@@ -14,5 +14,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Generate SHA
+      id: generate_sha
+      run: |
+        SHA=$(echo $GITHUB_SHA | head -c7)
+        echo "sha=$SHA" >> $GITHUB_OUTPUT
+
     - name: Build docker image
-      run: docker build -t froites/journey-api:latest .
+      run: docker build -t froites/journey-api:${{ steps.generate_sha.outputs.sha }} .
+
+    # Logar no container registry
+    # Enviar imagem pós
