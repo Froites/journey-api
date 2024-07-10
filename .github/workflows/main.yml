@@ -26,13 +26,13 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build docker image
-      run: docker build -t froites/journey-api:${{ steps.generate_sha.outputs.sha }} .
-
-    - name: Push image
-      run: |
-        docker push froites/journey-api:${{ steps.generate_sha.outputs.sha }}
-        docker tag froites/journey-api:${{ steps.generate_sha.outputs.sha }} froites/journey-api:latest
-        docker push froites/journey-api:latest
+    - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            froites/journey-api:${{ steps.generate_sha.outputs.sha }}
+            froites/journey-api:latest
 
     # Enviar imagem pós
